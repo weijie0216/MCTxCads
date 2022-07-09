@@ -79,9 +79,43 @@
     <td><span id="country"></span></td>
     </tr>
   </table>
-  </div>
-
   <iframe id="testing" width="640px" height="480px" src="about:blank" frameborder="0" marginwidth="0" marginheight="0" style="border: none; max-width:100%; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen> </iframe>
+</div>
+</body>
+<script>
+async function getUser() {
+  let _data = {
+    "apiKey": "6b9b91e5-6403-41c1-b364-b20a2546d435",
+    "firstName": "Bill",
+    "lastName": "Gates",
+    "phone": "0123456789",
+    "email": "bill.ga@yopmail.com"
+  }
+  // Making an API call (request)
+  // and getting the response back
+  const response = await fetch('https://unified.apiservice.dev.cads.ai/api/v1/tenant/handshake', {
+    method: "POST",
+    body: JSON.stringify(_data),
+    headers: {"Content-type": "application/json; charset=UTF-8"}
+  })
+  // Parsing it to JSON format
+  const result = await response.json();
+  console.log(result.data);
+  // Retrieving data from JSON
+  let generatedurl = result.data;
+  document.title = generatedurl;
+  // Accessing the div container and modify/add
+  // elements to the containers
+  document.getElementById("head").innerHTML = generatedurl;
+  document.getElementById("testing").src = generatedurl;
+}
+// Calling the function
+getUser();
+</script>
+
+</html>
+
+  </div>
 </div>
 </body>
 <script>
@@ -101,7 +135,12 @@ async function getUser() {
   const response = await fetch('https://unified.apiservice.dev.cads.ai/api/v1/tenant/handshake', {
     method: "POST",
     body: JSON.stringify(_data),
-    headers: {"Content-type": "application/json; charset=UTF-8"}
+    headers: {"Content-type": "application/json; charset=UTF-8",
+              "User-Agent": "PostmanRuntime/7.29.2",
+              "Accept": "*/*",
+              "Accept-Encoding": "gzip, deflate, br",
+              "Connection": "keep-alive"
+             }
   })
 
   // Parsing it to JSON format
@@ -117,7 +156,7 @@ async function getUser() {
   // elements to the containers
   document.getElementById("head").innerHTML = generatedurl;
 
-  document.getElementById("testing").src = generatedurl;
+  window.open(generatedurl, "_self");
 
 }
 
